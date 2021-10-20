@@ -21,6 +21,33 @@ class PlasmaController extends Controller
         ->get();
         $array = json_decode($exist);
         
+        //validation
+        $req->validate([
+            'fname'=>['bail','required','max:15'],
+            'lname'=>['required','max:15'],
+            'gender'=>['required','max:7'],
+            'contactno'=>['required','numeric','digits:10','regex:/^([0-9\s\-\+\(\)]*)$/'],
+            'city' =>['required','max:20'],
+            'state'=>['required'],
+            'address'=>['required','max:255'],
+            'bloodgroup'=>['required'],
+            'confirm'=>['required'],
+            'symptoms'=>['required'],
+            'novirus'=>['required'],
+            'consent'=>['required'],
+            'available'=>['required']
+        ],
+        [
+            'fname'=>'Max of 15 characters allowed in FirstName',
+            'lname'=>'Max of 15 characters allowed in LastName',
+            'gender'=>'Max of 7 characters allowed in gender',
+            'contactno'=>'10 numeric characters allowed in phone No',
+            'city' =>'City name should be of max 20 characters',
+            'address'=>'Max 255 characters allowed in address',
+           
+        ]
+       );
+        
         //updates the value if the question exixts
         if(!empty($array)){
 
